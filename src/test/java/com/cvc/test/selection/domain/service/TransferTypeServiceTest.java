@@ -22,26 +22,26 @@ public class TransferTypeServiceTest {
 
     @Test
     public void defineTaxDateIntervalInvalidException() {
-        Assertions.assertThrows(DateIntervalInvalidException.class, () -> transferTypeService.defineTax(LocalDate.now().plusDays(-1)));
+        Assertions.assertThrows(DateIntervalInvalidException.class, () -> transferTypeService.defineTransferType(LocalDate.now().plusDays(-1)));
     }
 
     @Test
     public void defineTaxTypeA() {
-        Assertions.assertEquals(TransferType.A,transferTypeService.defineTax(LocalDate.now()));
+        Assertions.assertEquals(TransferType.A,transferTypeService.defineTransferType(LocalDate.now()));
     }
 
     @Test
     public void defineTaxTypeB() {
-        Assertions.assertEquals(TransferType.B,transferTypeService.defineTax(LocalDate.now().plusDays(1)));
+        Assertions.assertEquals(TransferType.B,transferTypeService.defineTransferType(LocalDate.now().plusDays(1)));
     }
 
     @Test
     public void defineTaxTypeBLimit10() {
-        Assertions.assertEquals(TransferType.B,transferTypeService.defineTax(LocalDate.now().plusDays(10)));
+        Assertions.assertEquals(TransferType.B,transferTypeService.defineTransferType(LocalDate.now().plusDays(10)));
     }
 
     @Test
     public void defineTaxTypeC() {
-        Assertions.assertEquals(TransferType.C,transferTypeService.defineTax(LocalDate.now().plusDays(11)));
+        Assertions.assertEquals(TransferType.C,transferTypeService.defineTransferType(LocalDate.now().plusDays(11)));
     }
 }

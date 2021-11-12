@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Service
 public class TransferTypeService {
 
-    public TransferType defineTax(LocalDate transferDate){
+    public TransferType defineTransferType(LocalDate transferDate){
         if(transferDate.isBefore(LocalDate.now())){
             throw new DateIntervalInvalidException("Invalid Date interval");
         }

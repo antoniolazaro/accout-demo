@@ -4,5 +4,5 @@ import com.cvc.test.selection.domain.entity.Transfer;
 
 public interface TransferUseCase {
 
-    void schedule(Transfer transfer);
+    Transfer schedule(Transfer transfer);
 }

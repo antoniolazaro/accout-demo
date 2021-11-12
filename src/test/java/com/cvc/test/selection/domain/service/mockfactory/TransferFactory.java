@@ -1,5 +1,6 @@
 package com.cvc.test.selection.domain.service.mockfactory;
 
+import com.cvc.test.selection.domain.entity.Account;
 import com.cvc.test.selection.domain.entity.Transfer;
 
 import java.math.BigDecimal;
@@ -13,6 +14,15 @@ public final class TransferFactory {
 
     public static Transfer createTransferDefaultAmount10(){
         return new Transfer(new Random().nextLong(),BigDecimal.valueOf(10),LocalDate.now(),LocalDate.now().plusDays(2),AccountFactory.createAccountOrigin(),AccountFactory.createAccountDestination());
+    }
+
+    public static Transfer createTransferSameOriginAndDestination(){
+        Account account = AccountFactory.createAccountOrigin();
+        return new Transfer(new Random().nextLong(),BigDecimal.valueOf(10),LocalDate.now(),LocalDate.now().plusDays(2),account,account);
+    }
+
+    public static Transfer createTransferTransferDate(LocalDate transferDate,Integer interval){
+        return new Transfer(new Random().nextLong(),BigDecimal.valueOf(10),transferDate,transferDate.plusDays(interval),AccountFactory.createAccountOrigin(),AccountFactory.createAccountDestination());
     }
 
     public static Transfer createTransferDefaultAmount10IntervalDate(Integer differenceDate){
