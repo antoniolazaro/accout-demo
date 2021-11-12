@@ -1,5 +1,5 @@
 package com.cvc.test.selection.domain.entity;
 
-public enum Tax {
+public enum TransferType {
     A, B, C;
 }

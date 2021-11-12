@@ -17,30 +17,31 @@ public class Transfer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private final Long id;
     @Column(name = "amount")
     @Positive
     @Digits(fraction = 2, integer = 10, message ="msg2")
-    private BigDecimal amount;
+    private final BigDecimal amount;
     @Column(name = "tax_amout")
     @Positive
     @Digits(fraction = 2, integer = 10, message ="msg2")
     private BigDecimal taxAmount;
-    @Column(columnDefinition = "DATE", name = "transferDate")
+    @Column(columnDefinition = "DATE", name = "transfer_date")
     @FutureOrPresent
     @NotNull
-    private LocalDate transferDate;
-    @Column(columnDefinition = "DATE", name = "scheduleDate")
+    private final LocalDate transferDate;
+    @Column(columnDefinition = "DATE", name = "schedule_date")
     @NotNull
     @FutureOrPresent
-    private LocalDate scheduleDate;
+    private final LocalDate scheduleDate;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_origin_account")
-    private Account origin;
+    private final Account origin;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_destination_account")
-    private Account destination;
+    private final Account destination;
+    @Column(columnDefinition = "DATE", name = "transfer_type")
     @Enumerated(EnumType.STRING)
-    private Tax tax;
+    private TransferType transferType;
 
 }

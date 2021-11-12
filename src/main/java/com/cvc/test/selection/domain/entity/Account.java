@@ -14,13 +14,14 @@ public class Account {
 
     @Id
     @Max(20)
-    private String number;
+    private final String number;
     @Column(name = "name")
     @NotBlank
     @Max(50)
-    private String name;
+    private final String name;
     @Column(name = "document")
     @NotBlank
     @Max(20)
-    private String document;
+    private final String document;
+
 }

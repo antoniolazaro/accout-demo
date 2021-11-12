@@ -8,7 +8,7 @@ CREATE TABLE transfer (
   schedule_date DATE NOT NULL,
   fk_origin_account varchar(20) NOT NULL,
   fk_destination_account varchar(20) NOT NULL,
-  tax VARCHAR(1) NOT NULL
+  transfer_type VARCHAR(1) NOT NULL
 );
 
 ALTER TABLE transfer ADD FOREIGN KEY (fk_origin_account) REFERENCES account(number);
