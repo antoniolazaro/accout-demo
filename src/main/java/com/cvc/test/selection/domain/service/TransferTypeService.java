@@ -11,13 +11,16 @@ import java.time.LocalDate;
 public class TransferTypeService {
 
     public TransferType defineTax(LocalDate transferDate){
+        if(transferDate.isBefore(LocalDate.now())){
+            throw new DateIntervalInvalidException("Invalid Date interval");
+        }
         if(transferDate.isEqual(LocalDate.now())){
             return TransferType.A;
         }
-        if(Duration.between(LocalDate.now(), transferDate).toDays() <= 10){
+        if(Duration.between(LocalDate.now().atStartOfDay(), transferDate.atStartOfDay()).toDays() <= 10){
             return TransferType.B;
         }
-        if(Duration.between(LocalDate.now(), transferDate).toDays() > 10){
+        if(Duration.between(LocalDate.now().atStartOfDay(), transferDate.atStartOfDay()).toDays() > 10){
             return TransferType.C;
         }
         throw new DateIntervalInvalidException("Invalid Date interval");

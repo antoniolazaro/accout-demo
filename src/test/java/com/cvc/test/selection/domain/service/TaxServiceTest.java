@@ -120,5 +120,4 @@ public class TaxServiceTest {
         BigDecimal taxAmount = taxService.calculateTaxAmount(transfer);
         Assertions.assertEquals(BigDecimal.valueOf(2000.02).setScale(2),taxAmount);
     }
-
 }
