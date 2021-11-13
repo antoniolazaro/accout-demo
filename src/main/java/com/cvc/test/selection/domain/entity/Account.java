@@ -1,27 +1,32 @@
 package com.cvc.test.selection.domain.entity;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 
-@Data
+@Getter
+@Setter
+@Accessors(chain=true)
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "account")
 public class Account {
 
     @Id
     @Max(20)
-    private final String number;
+    private String number;
     @Column(name = "name")
     @NotBlank
     @Max(50)
-    private final String name;
+    private String name;
     @Column(name = "document")
     @NotBlank
     @Max(20)
-    private final String document;
+    private String document;
 
 }

@@ -1,17 +1,17 @@
 package com.cvc.test.selection.domain.service;
 
 import com.cvc.test.selection.domain.entity.Account;
-import com.cvc.test.selection.domain.entity.TransferType;
 import com.cvc.test.selection.domain.entity.Transfer;
-import com.cvc.test.selection.domain.exceptions.AccountNotFound;
+import com.cvc.test.selection.domain.entity.TransferType;
+import com.cvc.test.selection.domain.exceptions.AccountNotFoundException;
 import com.cvc.test.selection.domain.exceptions.InvalidTransferException;
 import com.cvc.test.selection.domain.repository.AccountRepository;
 import com.cvc.test.selection.domain.repository.TransferRepository;
 import com.cvc.test.selection.web.usecase.TransferUseCase;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class TransferService implements TransferUseCase {
@@ -29,8 +29,8 @@ public class TransferService implements TransferUseCase {
     }
 
     @Override
-    public List<Transfer> listSchedules() {
-        return transferRepository.findAll();
+    public Page<Transfer> listSchedules(Pageable pageable) {
+        return transferRepository.findAll(pageable);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class TransferService implements TransferUseCase {
     private void validateAccount(Account account){
         String accountNumber = account.getNumber();
         if(!accountRepository.findById(accountNumber).isPresent()){
-            throw new AccountNotFound("""
+            throw new AccountNotFoundException("""
                     Invalid account: %s 
                     """.formatted(accountNumber));
         }

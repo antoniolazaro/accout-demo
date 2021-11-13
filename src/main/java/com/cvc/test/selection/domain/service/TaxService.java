@@ -17,6 +17,9 @@ public class TaxService {
                 case A:
                     return BigDecimal.valueOf(3L).add(transfer.getAmount().multiply(BigDecimal.valueOf(0.03)));
                 case B:
+                    if(scheduleAndTransferDaysDifference == 0){
+                        return BigDecimal.valueOf(12L);
+                    }
                     return BigDecimal.valueOf(12L).multiply(BigDecimal.valueOf(scheduleAndTransferDaysDifference));
                 case C:
                     if (scheduleAndTransferDaysDifference > 10 && scheduleAndTransferDaysDifference <= 20) {

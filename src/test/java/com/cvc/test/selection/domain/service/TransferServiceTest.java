@@ -2,7 +2,7 @@ package com.cvc.test.selection.domain.service;
 
 import com.cvc.test.selection.domain.entity.Transfer;
 import com.cvc.test.selection.domain.entity.TransferType;
-import com.cvc.test.selection.domain.exceptions.AccountNotFound;
+import com.cvc.test.selection.domain.exceptions.AccountNotFoundException;
 import com.cvc.test.selection.domain.exceptions.DateIntervalInvalidException;
 import com.cvc.test.selection.domain.exceptions.InvalidTransferException;
 import com.cvc.test.selection.domain.exceptions.UndefinedTaxException;
@@ -70,7 +70,7 @@ public class TransferServiceTest {
         BDDMockito.given(transferTypeService.defineTransferType(transfer.getTransferDate())).willReturn(TransferType.A);
         BDDMockito.given(taxService.calculateTaxAmount(transfer)).willReturn(BigDecimal.valueOf(3.30).setScale(2));
         BDDMockito.given(accountRepository.findById(transfer.getOrigin().getNumber())).willReturn(Optional.empty());
-        Assertions.assertThrows(AccountNotFound.class, () -> transferService.schedule(transfer));
+        Assertions.assertThrows(AccountNotFoundException.class, () -> transferService.schedule(transfer));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class TransferServiceTest {
         BDDMockito.given(taxService.calculateTaxAmount(transfer)).willReturn(BigDecimal.valueOf(3.30).setScale(2));
         BDDMockito.given(accountRepository.findById(transfer.getOrigin().getNumber())).willReturn(Optional.of(transfer.getOrigin()));
         BDDMockito.given(accountRepository.findById(transfer.getDestination().getNumber())).willReturn(Optional.empty());
-        Assertions.assertThrows(AccountNotFound.class, () -> transferService.schedule(transfer));
+        Assertions.assertThrows(AccountNotFoundException.class, () -> transferService.schedule(transfer));
     }
 
     @Test
@@ -101,7 +101,7 @@ public class TransferServiceTest {
 
     @Test
     public void scheduleCaseB() {
-        LocalDate currentDate = LocalDate.now();
+        LocalDate currentDate = LocalDate.now().plusDays(1);
         Transfer transfer = TransferFactory.createTransferTransferDate(currentDate,9);
 
         BDDMockito.given(transferTypeService.defineTransferType(currentDate)).willReturn(TransferType.B);
@@ -112,6 +112,22 @@ public class TransferServiceTest {
 
         Transfer persistedTransfer = transferService.schedule(transfer);
         Assertions.assertEquals(BigDecimal.valueOf(108),persistedTransfer.getTaxAmount());
+        Assertions.assertEquals(TransferType.B,persistedTransfer.getTransferType());
+    }
+
+    @Test
+    public void scheduleCaseBSameDate() {
+        LocalDate currentDate = LocalDate.now().plusDays(1);
+        Transfer transfer = TransferFactory.createTransferTransferDate(currentDate,0);
+
+        BDDMockito.given(transferTypeService.defineTransferType(currentDate)).willReturn(TransferType.B);
+        BDDMockito.given(taxService.calculateTaxAmount(transfer)).willReturn(BigDecimal.valueOf(12));
+        BDDMockito.given(accountRepository.findById(transfer.getOrigin().getNumber())).willReturn(Optional.of(transfer.getOrigin()));
+        BDDMockito.given(accountRepository.findById(transfer.getDestination().getNumber())).willReturn(Optional.of(transfer.getDestination()));
+        BDDMockito.given(transferRepository.save(transfer)).willReturn(transfer);
+
+        Transfer persistedTransfer = transferService.schedule(transfer);
+        Assertions.assertEquals(BigDecimal.valueOf(12),persistedTransfer.getTaxAmount());
         Assertions.assertEquals(TransferType.B,persistedTransfer.getTransferType());
     }
 

@@ -12,10 +12,12 @@ public class TransferMapper {
         return new Transfer(
                 null,
                 transferDTO.getAmount(),
+                null,
                 transferDTO.getTransferDate(),
                 transferDTO.getScheduleDate(),
                 new Account (transferDTO.getAccountOrigin(),null,null),
-                new Account (transferDTO.getAccountDestination(),null,null)
+                new Account (transferDTO.getAccountDestination(),null,null),
+                null
         );
     }
 
