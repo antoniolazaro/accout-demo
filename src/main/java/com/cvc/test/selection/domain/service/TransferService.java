@@ -11,6 +11,8 @@ import com.cvc.test.selection.web.usecase.TransferUseCase;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class TransferService implements TransferUseCase {
 
@@ -24,6 +26,11 @@ public class TransferService implements TransferUseCase {
         this.taxService = taxService;
         this.transferTypeService = transferTypeService;
         this.accountRepository = accountRepository;
+    }
+
+    @Override
+    public List<Transfer> listSchedules() {
+        return transferRepository.findAll();
     }
 
     @Override

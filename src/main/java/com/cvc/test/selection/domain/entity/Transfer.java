@@ -22,7 +22,7 @@ public class Transfer {
     @Positive
     @Digits(fraction = 2, integer = 10, message ="msg2")
     private final BigDecimal amount;
-    @Column(name = "tax_amout")
+    @Column(name = "tax_amount")
     @Positive
     @Digits(fraction = 2, integer = 10, message ="msg2")
     private BigDecimal taxAmount;
