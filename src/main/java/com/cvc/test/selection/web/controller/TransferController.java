@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,9 +30,15 @@ public class TransferController {
     }
 
     @GetMapping
-    Page<TransferDTO> getAllSchedules(Pageable pageable){
+    Page<TransferDTO> getAllSchedules(@RequestParam(value = "page",defaultValue = "0") int page,
+                                      @RequestParam(value = "size", defaultValue = "20") int size){
+        var pageable = PageRequest.of(page, size);
         logger.info("Searching schedules...");
-        List<TransferDTO> listSchedules = transferUseCase.listSchedules(pageable).stream().toList().stream().map(transferMapper::convertModelToDTO).collect(Collectors.toList());
+        List<TransferDTO> listSchedules = transferUseCase.listSchedules(pageable).stream().toList().stream().map(it ->{
+            var dto = transferMapper.convertModelToDTO(it);
+//            dto.setLanguage(messageSource.getMessage("language",new Object[0],new Locale(lang)));
+            return dto;
+        }).collect(Collectors.toList());
         logger.info("Return schedules %s".formatted(listSchedules.size()));
         return  new PageImpl<>(listSchedules,pageable,listSchedules.size());
     }
@@ -42,7 +49,7 @@ public class TransferController {
         Transfer model = transferMapper.convertDTOToModel(transferDTO);
         logger.info("Model converted...");
         Transfer persistedModel = transferUseCase.schedule(model);
-        logger.info("Model persistedModel %s...",persistedModel);
+        logger.info("Model persistedModel %s...".formatted(persistedModel));
         return transferMapper.convertModelToDTO(persistedModel);
     }
 

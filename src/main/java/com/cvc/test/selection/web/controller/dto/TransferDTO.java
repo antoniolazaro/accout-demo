@@ -27,4 +27,5 @@ public class TransferDTO {
     private String accountOrigin;
     @NotBlank
     private String accountDestination;
+    private String language;
 }

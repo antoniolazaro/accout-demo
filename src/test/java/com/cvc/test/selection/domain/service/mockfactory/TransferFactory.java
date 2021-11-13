@@ -18,7 +18,7 @@ public final class TransferFactory {
     }
 
     public static TransferDTO createTransferDTORequest(){
-        return new TransferDTO(null,BigDecimal.TEN,null,LocalDate.now(),LocalDate.now().plusDays(2),AccountFactory.createAccountOrigin().getNumber(),AccountFactory.createAccountDestination().getNumber());
+        return new TransferDTO(null,BigDecimal.TEN,null,LocalDate.now(),LocalDate.now().plusDays(2),AccountFactory.createAccountOrigin().getNumber(),AccountFactory.createAccountDestination().getNumber(),null);
     }
 
     public static Transfer createTransferDefaultAmount10SemId(){

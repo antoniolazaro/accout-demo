@@ -29,7 +29,8 @@ public class TransferMapper {
                 transfer.getTransferDate(),
                 transfer.getScheduleDate(),
                 transfer.getOrigin().getNumber(),
-                transfer.getDestination().getNumber()
+                transfer.getDestination().getNumber(),
+                null
         );
         transferDTO.setTaxAmount(transfer.getTaxAmount());
         return transferDTO;
