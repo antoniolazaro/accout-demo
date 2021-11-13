@@ -19,10 +19,10 @@ public class AccountFactory {
     }
 
     public static Account createAccountOrigin(){
-        return new Account(String.valueOf(new Random().nextLong()),"João Origin","23443253");
+        return new Account("884429","João Origin","23443253");
     }
 
     public static Account createAccountDestination(){
-        return new Account(String.valueOf(new Random().nextLong()),"Maria Destination","123464");
+        return new Account("3344223","Maria Destination","123464");
     }
 }

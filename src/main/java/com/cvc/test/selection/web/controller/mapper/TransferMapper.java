@@ -25,6 +25,7 @@ public class TransferMapper {
         TransferDTO transferDTO =  new TransferDTO(
                 transfer.getId(),
                 transfer.getAmount(),
+                null,
                 transfer.getTransferDate(),
                 transfer.getScheduleDate(),
                 transfer.getOrigin().getNumber(),
